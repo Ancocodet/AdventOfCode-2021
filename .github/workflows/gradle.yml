@@ -29,9 +29,9 @@ jobs:
     - name: Static files storage
       # You may pin to the exact commit or the version.
       # uses: sylvanld/action-storage@ae3e57af3494b0970af77a20816b976d856ced2d
-      uses: Ancocodet/AOCStorage@v1
+      uses: sylvanld/action-storage@v1
       with:
-        storage-branch: 2021
+        storage-branch: answers
         # Path to the file that will be saved
         src: outputs/*
         # Path in storage branch where the file will be saved
