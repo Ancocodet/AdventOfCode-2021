@@ -26,13 +26,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Static files storage
-      # You may pin to the exact commit or the version.
-      # uses: sylvanld/action-storage@ae3e57af3494b0970af77a20816b976d856ced2d
+    - name: Save answers to different branch
       uses: sylvanld/action-storage@v1
       with:
         storage-branch: answers
-        # Path to the file that will be saved
-        src: outputs/*
-        # Path in storage branch where the file will be saved
+        src: /outputs/*.txt
         dst: /
