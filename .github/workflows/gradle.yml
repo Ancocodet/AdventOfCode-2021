@@ -27,8 +27,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Save answers to different branch
-      uses: sylvanld/action-storage@v1
+      uses: actions/upload-artifact@v2
       with:
-        storage-branch: answers
-        src: \*.txt
-        dst: /
+        name: answers
+        path: outputs/*
