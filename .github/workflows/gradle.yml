@@ -26,13 +26,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-  save:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Save answers to different branch
-        uses: sylvanld/action-storage@v1
-        with:
-          storage-branch: answers
-          src: /outputs/*.txt
-          dst: /
+    - name: Save answers to different branch
+      uses: sylvanld/action-storage@v1
+      with:
+        storage-branch: answers
+        src: /outputs/*.txt
+        dst: /
