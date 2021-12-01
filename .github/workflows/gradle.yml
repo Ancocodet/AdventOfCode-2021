@@ -29,7 +29,8 @@ jobs:
     - name: Run with Gradle
       run: ./gradlew run
     - name: Save answers to different branch
-      uses: actions/upload-artifact@v2
+      uses: sylvanld/action-storage@v1
       with:
-        name: answers
-        path: outputs/day1.txt
+        target-branch: answers
+        src: outputs/*
+        dst: /
