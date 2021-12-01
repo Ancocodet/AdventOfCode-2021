@@ -26,6 +26,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Run with Gradle
+      run: ./gradlew run
     - name: Save answers to different branch
       uses: actions/upload-artifact@v2
       with:
