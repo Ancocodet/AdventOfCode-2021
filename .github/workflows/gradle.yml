@@ -31,6 +31,6 @@ jobs:
     - name: Save answers to different branch
       uses: sylvanld/action-storage@v1
       with:
-        target-branch: answers
+        storage-branch: answers
         src: outputs/*
         dst: /
