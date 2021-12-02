@@ -28,6 +28,11 @@ jobs:
       run: ./gradlew build
     - name: Run with Gradle
       run: ./gradlew run
+    - name: Delete answers branches
+      uses: dawidd6/action-delete-branch@v3.1.0
+      with:
+        branches: answers
+        soft_fail: true
     - name: Save answers to different branch
       uses: sylvanld/action-storage@v1
       with:
