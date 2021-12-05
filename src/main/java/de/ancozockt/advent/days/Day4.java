@@ -85,7 +85,6 @@ public class Day4 implements AdventDay {
             lastCall = number;
             if(cards.size() > 1 && win.size() > 0){
                 cards.removeAll(win);
-                System.out.println(cards.size());
             }else if(win.size() > 0){
                 break;
             }
@@ -97,4 +96,5 @@ public class Day4 implements AdventDay {
 
         return "0";
     }
+
 }

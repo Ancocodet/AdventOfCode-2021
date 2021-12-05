@@ -1,8 +1,10 @@
 package de.ancozockt.advent.utilities;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class FileHelper {
 
@@ -15,6 +17,13 @@ public class FileHelper {
             throw new IllegalArgumentException(fileName + " is not found");
         }
         return ioStream;
+    }
+
+    public void downloadInput(String url, File file){
+        try {
+            InputStream inputStream = new URL(url).openStream();
+            Files.copy(inputStream, Paths.get(file.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
+        }catch (IOException ignored){ }
     }
 
     public BufferedReader getFileInput(String fileName){

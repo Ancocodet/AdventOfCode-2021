@@ -21,6 +21,8 @@ public class Main {
             folder.mkdirs();
         }
 
+        fileHelper.downloadInput("https://adventofcode.com/2021/day/5/input", new File("outputs", "day5-input"));
+
         reflections.getTypesAnnotatedWith(ADay.class).forEach(aClass -> {
             ADay aDay = aClass.getAnnotation(ADay.class);
             AdventDay adventDay = (AdventDay) createNewInstanceOfClass(aClass);
