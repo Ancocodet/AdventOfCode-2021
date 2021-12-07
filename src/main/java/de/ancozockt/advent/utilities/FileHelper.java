@@ -19,6 +19,16 @@ public class FileHelper {
         return ioStream;
     }
 
+    private InputStream getFile(ClassLoader classLoader, final String fileName){
+        InputStream ioStream = classLoader
+                .getResourceAsStream(fileName);
+
+        if (ioStream == null) {
+            throw new IllegalArgumentException(fileName + " is not found");
+        }
+        return ioStream;
+    }
+
     public void downloadInput(String url, File file){
         try {
             InputStream inputStream = new URL(url).openStream();
@@ -28,6 +38,10 @@ public class FileHelper {
 
     public BufferedReader getFileInput(String fileName){
         return new BufferedReader(new InputStreamReader(getFile(fileName)));
+    }
+
+    public BufferedReader getFileInput(ClassLoader classLoader, String fileName){
+        return new BufferedReader(new InputStreamReader(getFile(classLoader, fileName)));
     }
 
 }
