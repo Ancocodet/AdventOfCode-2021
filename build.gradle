@@ -8,6 +8,9 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url = "https://repo.enonic.com/public/"
+    }
 }
 
 ext {
@@ -19,9 +22,11 @@ application {
 }
 
 dependencies {
+    implementation 'com.google.common:google-collect:0.5'
     implementation 'org.reflections:reflections:0.10.2'
     testImplementation 'org.reflections:reflections:0.10.2'
 
+    testImplementation 'com.google.common:google-collect:0.5'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }

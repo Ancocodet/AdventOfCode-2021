@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class AnnotationTest {
 
-    private final int DAYS = 7;
+    private final int DAYS = 8;
 
     @Test
     public void testAnnotations(){
@@ -28,8 +28,6 @@ public class AnnotationTest {
             ADay aDay = aClass.getAnnotation(ADay.class);
             AdventDay adventDay = (AdventDay) createNewInstanceOfClass(aClass);
 
-            System.out.println(aDay.day());
-
             Long[] outputs = null;
             try {
                 outputs = readOutputs(aDay.day());
@@ -38,13 +36,9 @@ public class AnnotationTest {
             assert outputs != null;
 
             String part1 = adventDay.part1(readFromFile("inputs/" + aDay.day() + "-input"));
-            String part2 = adventDay.part2(readFromFile("inputs/" + aDay.day() + "-input"));
-
-            System.out.println(Long.parseLong(part1) + " | " + outputs[0]);
-
             assert Long.parseLong(part1) == outputs[0];
 
-            System.out.println(Long.parseLong(part2) + " | " + outputs[1]);
+            String part2 = adventDay.part2(readFromFile("inputs/" + aDay.day() + "-input"));
             assert Long.parseLong(part2) == outputs[1];
         });
     }
