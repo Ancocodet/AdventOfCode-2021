@@ -26,7 +26,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Run with Gradle
+    - name: Run tests
+      run: ./gradlew test
+    - name: Run application
       run: ./gradlew run
     - name: Delete answers branches
       uses: dawidd6/action-delete-branch@v3.1.0
