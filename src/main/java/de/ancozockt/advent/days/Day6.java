@@ -58,11 +58,11 @@ public class Day6 implements AdventDay {
     }
 
     private ArrayList<Lanternfish> simulateDays(int days, ArrayList<Lanternfish> input){
-        ArrayList<Lanternfish> lanternfish = input;
+        ArrayList<Lanternfish> lanternFishes = input;
 
         for(int i = 0; i < days; i++){
             AtomicInteger newFishes = new AtomicInteger();
-            lanternfish.forEach(fish -> {
+            lanternFishes.forEach(fish -> {
                 if(fish.isFinished()){
                     fish.setTimer(6);
                     newFishes.getAndIncrement();
@@ -71,24 +71,20 @@ public class Day6 implements AdventDay {
                 }
             });
             for(int f = 0; f < newFishes.get(); f++){
-                lanternfish.add(new Lanternfish(8));
+                lanternFishes.add(new Lanternfish(8));
             }
         }
 
-        return lanternfish;
+        return lanternFishes;
     }
 
     private ArrayList<Lanternfish> formatInput(BufferedReader reader){
         StringBuilder input = new StringBuilder();
         String line;
-        try {
-            while ((line = reader.readLine()) != null){
-                input.append(line);
-            }
-        }catch (IOException ignored) {}
+
+        reader.lines().forEach(input::append);
 
         ArrayList<Lanternfish> result = new ArrayList<>();
-
         for(String fish : input.toString().split(",")){
             result.add(new Lanternfish(Integer.parseInt(fish)));
         }

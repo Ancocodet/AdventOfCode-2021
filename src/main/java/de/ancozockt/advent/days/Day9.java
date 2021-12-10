@@ -61,28 +61,28 @@ public class Day9 implements AdventDay {
                 toExplore.add(new Point(i, j));
 
                 while (!toExplore.isEmpty()) {
-                    Point p = toExplore.remove();
-                    if (!exploredPoints.add(p)) {
+                    Point point = toExplore.remove();
+                    if (!exploredPoints.add(point)) {
                         continue;
                     }
 
-                    if (lines.get(p.x).codePointAt(p.y) == '9') {
+                    if (lines.get(point.x).codePointAt(point.y) == '9') {
                         continue;
                     }
 
                     basinSize++;
 
-                    if (p.x + 1 < lines.size()) {
-                        toExplore.add(new Point(p.x + 1, p.y));
+                    if (point.x + 1 < lines.size()) {
+                        toExplore.add(new Point(point.x + 1, point.y));
                     }
-                    if (p.x - 1 >= 0) {
-                        toExplore.add(new Point(p.x - 1, p.y));
+                    if (point.x - 1 >= 0) {
+                        toExplore.add(new Point(point.x - 1, point.y));
                     }
-                    if (p.y + 1 < l.length()) {
-                        toExplore.add(new Point(p.x, p.y + 1));
+                    if (point.y + 1 < l.length()) {
+                        toExplore.add(new Point(point.x, point.y + 1));
                     }
-                    if (p.y - 1 >= 0) {
-                        toExplore.add(new Point(p.x, p.y - 1));
+                    if (point.y - 1 >= 0) {
+                        toExplore.add(new Point(point.x, point.y - 1));
                     }
                 }
 
@@ -90,11 +90,11 @@ public class Day9 implements AdventDay {
             }
         }
 
-        List<Integer> biggest = basinSizes.stream().sorted(Comparator.reverseOrder()).limit(3).collect(Collectors.toList());
+        List<Integer> biggest = basinSizes.stream().sorted(Comparator.reverseOrder()).limit(3).toList();
 
         AtomicLong result = new AtomicLong(1);
-        for(int i = 0; i < biggest.size(); i++){
-            result.set(result.get() * biggest.get(i));
+        for (Integer integer : biggest) {
+            result.set(result.get() * integer);
         }
 
         return String.valueOf(result.get());

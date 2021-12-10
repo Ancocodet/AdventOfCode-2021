@@ -14,7 +14,7 @@ public class Day8 implements AdventDay {
 
     @Override
     public String part1(BufferedReader reader) {
-        Stream<String> lines = formatInput(reader);
+        Stream<String> lines = reader.lines();
 
         return String.valueOf(lines.filter(e -> !e.isBlank())
                 .map(e -> e.split("\\|")[1])
@@ -25,7 +25,7 @@ public class Day8 implements AdventDay {
 
     @Override
     public String part2(BufferedReader reader) {
-        Stream<String> lines = formatInput(reader);
+        Stream<String> lines = reader.lines();
 
         return String.valueOf(lines.filter(e -> !e.isBlank())
                 .map(x -> x.replace(" | ", " ").split(" "))
@@ -96,19 +96,6 @@ public class Day8 implements AdventDay {
                 + 10 * correspondence.get(strToSet(digits[digits.length - 2]))
                 + 100 * correspondence.get(strToSet(digits[digits.length - 3]))
                 + 1000 * correspondence.get(strToSet(digits[digits.length - 4]));
-    }
-
-    private Stream<String> formatInput(BufferedReader reader){
-        StringBuilder input = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = reader.readLine()) != null){
-                input.append(line).append("\n");
-            }
-        }catch (IOException ignored) {}
-
-        return Arrays.stream(input.toString().split(System.lineSeparator()));
     }
 
 }
