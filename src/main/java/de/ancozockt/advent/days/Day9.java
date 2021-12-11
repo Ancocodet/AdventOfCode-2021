@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ADay(day = "day9")
@@ -20,22 +19,22 @@ public class Day9 implements AdventDay {
     public String part1(BufferedReader reader) {
         List<String> lines = formatInput(reader).toList();
 
-        AtomicLong totalRisk = new AtomicLong(0);
-        for(int i = 0; i < lines.size(); i++){
-            String line = lines.get(i);
-            for(int j = 0; j < line.length(); j++){
-                int c = line.codePointAt(j);
-                if( (i + 1 < lines.size() && lines.get(i + 1).codePointAt(j) <= c) ||
+        long totalRisk = 0;
+        for (int i = 0; i < lines.size(); i++) {
+            String l = lines.get(i);
+            for (int j = 0; j < l.length(); j++) {
+                int c = l.codePointAt(j);
+                if ((i + 1 < lines.size() && lines.get(i + 1).codePointAt(j) <= c) ||
                     (i - 1 >= 0 && lines.get(i - 1).codePointAt(j) <= c) ||
-                    (j + 1 < line.length() && lines.get(i).codePointAt(j + 1) <= c) ||
-                    (j - 1 >= 0 && lines.get(i).codePointAt(j - 1) <= c)){
+                    (j + 1 < l.length() && lines.get(i).codePointAt(j + 1) <= c) ||
+                    (j - 1 >= 0 && lines.get(i).codePointAt(j - 1) <= c)) {
                     continue;
                 }
-                totalRisk.addAndGet(c - '0' + 1);
+                totalRisk += c - '0' + 1;
             }
         }
 
-        return String.valueOf(totalRisk.get());
+        return String.valueOf(totalRisk);
     }
 
     @Override
