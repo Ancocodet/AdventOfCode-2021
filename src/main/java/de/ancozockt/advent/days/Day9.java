@@ -39,16 +39,16 @@ public class Day9 implements AdventDay {
 
     @Override
     public String part2(BufferedReader reader) {
-        List<String> lines = reader.lines().toList();
+        List<String> input = reader.lines().toList();
 
         Set<Point> exploredPoints = new HashSet<>();
         List<Integer> basinSizes = new ArrayList<>();
 
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                int count = line.codePointAt(x);
-                if (count == '9') {
+        for (int x = 0; x < input.size(); x++) {
+            String line = input.get(x);
+            for (int y = 0; y < line.length(); y++) {
+                int c = line.codePointAt(y);
+                if (c == '9') {
                     continue;
                 }
                 if (exploredPoints.contains(new Point(x, y))) {
@@ -65,13 +65,13 @@ public class Day9 implements AdventDay {
                         continue;
                     }
 
-                    if (lines.get(point.x).codePointAt(point.y) == '9') {
+                    if (input.get(point.x).codePointAt(point.y) == '9') {
                         continue;
                     }
 
                     basinSize++;
 
-                    if (point.x + 1 < lines.size()) {
+                    if (point.x + 1 < input.size()) {
                         toExplore.add(new Point(point.x + 1, point.y));
                     }
                     if (point.x - 1 >= 0) {
