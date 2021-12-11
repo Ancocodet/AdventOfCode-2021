@@ -17,47 +17,47 @@ public class Day9 implements AdventDay {
 
     @Override
     public String part1(BufferedReader reader) {
-        List<String> lines = formatInput(reader).toList();
+        List<String> lines = reader.lines().toList();
 
-        long totalRisk = 0;
-        for (int i = 0; i < lines.size(); i++) {
-            String l = lines.get(i);
-            for (int j = 0; j < l.length(); j++) {
-                int c = l.codePointAt(j);
-                if ((i + 1 < lines.size() && lines.get(i + 1).codePointAt(j) <= c) ||
-                    (i - 1 >= 0 && lines.get(i - 1).codePointAt(j) <= c) ||
-                    (j + 1 < l.length() && lines.get(i).codePointAt(j + 1) <= c) ||
-                    (j - 1 >= 0 && lines.get(i).codePointAt(j - 1) <= c)) {
+        AtomicLong totalRisk = new AtomicLong(0);
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                int count = line.codePointAt(x);
+                if ((y + 1 < lines.size() && lines.get(y + 1).codePointAt(x) <= count) ||
+                    (y - 1 >= 0 && lines.get(y - 1).codePointAt(x) <= count) ||
+                    (x + 1 < line.length() && lines.get(y).codePointAt(x + 1) <= count) ||
+                    (x - 1 >= 0 && lines.get(y).codePointAt(x - 1) <= count)) {
                     continue;
                 }
-                totalRisk += c - '0' + 1;
+                totalRisk.getAndAdd(count - '0' + 1);
             }
         }
 
-        return String.valueOf(totalRisk);
+        return String.valueOf(totalRisk.get());
     }
 
     @Override
     public String part2(BufferedReader reader) {
-        List<String> lines = formatInput(reader).toList();
+        List<String> lines = reader.lines().toList();
 
         Set<Point> exploredPoints = new HashSet<>();
         List<Integer> basinSizes = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
-            String l = lines.get(i);
-            for (int j = 0; j < l.length(); j++) {
-                int c = l.codePointAt(j);
-                if (c == '9') {
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                int count = line.codePointAt(x);
+                if (count == '9') {
                     continue;
                 }
-                if (exploredPoints.contains(new Point(i, j))) {
+                if (exploredPoints.contains(new Point(x, y))) {
                     continue;
                 }
 
                 int basinSize = 0;
                 Queue<Point> toExplore = new ArrayDeque<>();
-                toExplore.add(new Point(i, j));
+                toExplore.add(new Point(x, y));
 
                 while (!toExplore.isEmpty()) {
                     Point point = toExplore.remove();
@@ -77,7 +77,7 @@ public class Day9 implements AdventDay {
                     if (point.x - 1 >= 0) {
                         toExplore.add(new Point(point.x - 1, point.y));
                     }
-                    if (point.y + 1 < l.length()) {
+                    if (point.y + 1 < line.length()) {
                         toExplore.add(new Point(point.x, point.y + 1));
                     }
                     if (point.y - 1 >= 0) {
@@ -121,16 +121,4 @@ public class Day9 implements AdventDay {
         return result;
     }
 
-    private Stream<String> formatInput(BufferedReader reader){
-        StringBuilder input = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = reader.readLine()) != null){
-                input.append(line).append("\n");
-            }
-        }catch (IOException ignored) {}
-
-        return Arrays.stream(input.toString().split(System.lineSeparator()));
-    }
 }
