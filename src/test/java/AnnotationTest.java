@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class AnnotationTest {
 
-    private final int DAYS = 11;
+    private final int DAYS = 12;
 
     @Test
     public void testAnnotations(){

@@ -22,6 +22,9 @@ application {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.projectlombok:lombok:1.18.20'
+
     implementation 'com.google.common:google-collect:0.5'
     implementation 'org.reflections:reflections:0.10.2'
     testImplementation 'org.reflections:reflections:0.10.2'
