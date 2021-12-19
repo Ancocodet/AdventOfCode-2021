@@ -8,7 +8,6 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.BufferedReader;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @ADay(day = "day19")
 public class Day19 implements AdventDay {
@@ -65,6 +64,7 @@ public class Day19 implements AdventDay {
 
     private Game readInput(BufferedReader reader){
         List<Scanner> scanners = new ArrayList<>();
+
         java.util.Scanner scanner = new java.util.Scanner(reader);
         while (scanner.hasNextLine()) {
             scanner.nextLine();
