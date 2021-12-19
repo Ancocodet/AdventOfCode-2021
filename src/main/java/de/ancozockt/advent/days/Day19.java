@@ -8,6 +8,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.BufferedReader;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @ADay(day = "day19")
 public class Day19 implements AdventDay {
@@ -47,16 +48,23 @@ public class Day19 implements AdventDay {
 
     public static Game readInput(BufferedReader reader){
         List<Scanner> scanners = new ArrayList<>();
-        reader.lines().forEach(line -> {
-            if(!line.startsWith("--- ")) {
-                List<Vector3D> measurements = new ArrayList<>();
-                while (!"".equals(line) && line != null) {
-                    List<Integer> vector = Arrays.stream(line.split(",")).map(Integer::valueOf).toList();
-                    measurements.add(new Vector3D(vector.get(0), vector.get(1), vector.get(2)));
+        java.util.Scanner scanner = new java.util.Scanner(reader);
+        while (scanner.hasNextLine()) {
+            scanner.nextLine(); //Skip --- scanner 0 --- like line
+            String line = scanner.nextLine();
+            List<Vector3D> measurements = new ArrayList<>();
+            while (!"".equals(line) && line != null) {
+                List<Integer> vector = Arrays.stream(line.split(",")).map(Integer::valueOf).toList();
+                measurements.add(new Vector3D(vector.get(0), vector.get(1), vector.get(2)));
+                if (scanner.hasNextLine()) {
+                    line = scanner.nextLine();
+                } else {
+                    line = null;
                 }
-                scanners.add(new Scanner(measurements));
             }
-        });
+            scanners.add(new Scanner(measurements));
+        }
+
         return new Game(scanners);
     }
 
