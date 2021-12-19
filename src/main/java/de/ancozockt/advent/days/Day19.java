@@ -42,15 +42,32 @@ public class Day19 implements AdventDay {
 
     @Override
     public String part2(BufferedReader reader) {
-        return null;
+        Game game = readInput(reader);
+        List<Vector3D> placement = game.scanners.stream().map(Scanner::getPlacementTo0).toList();
+        int maxDistance = 0;
+        for (int i = 0; i < placement.size(); i++) {
+            for (int j = 0; j < placement.size(); j++) {
+                int distance = getManhattanDistance(placement.get(i), placement.get(j));
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                }
+            }
+        }
+        return String.valueOf(maxDistance);
     }
 
 
-    public static Game readInput(BufferedReader reader){
+    private int getManhattanDistance(Vector3D a, Vector3D b) {
+        return (int) (Math.abs(a.getX() - b.getX())
+                + Math.abs(a.getY() - b.getY())
+                + Math.abs(a.getZ() - b.getZ()));
+    }
+
+    private Game readInput(BufferedReader reader){
         List<Scanner> scanners = new ArrayList<>();
         java.util.Scanner scanner = new java.util.Scanner(reader);
         while (scanner.hasNextLine()) {
-            scanner.nextLine(); //Skip --- scanner 0 --- like line
+            scanner.nextLine();
             String line = scanner.nextLine();
             List<Vector3D> measurements = new ArrayList<>();
             while (!"".equals(line) && line != null) {
