@@ -8,6 +8,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.io.BufferedReader;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ADay(day = "day19")
 public class Day19 implements AdventDay {
@@ -43,16 +44,17 @@ public class Day19 implements AdventDay {
     public String part2(BufferedReader reader) {
         Game game = readInput(reader);
         List<Vector3D> placement = game.getScanners().stream().map(Scanner::getPlacementTo0).toList();
-        int maxDistance = 0;
+        AtomicInteger maxDistance = new AtomicInteger(0);
         for (int i = 0; i < placement.size(); i++) {
             for (int j = 0; j < placement.size(); j++) {
+                if(j == i) continue;
                 int distance = getManhattanDistance(placement.get(i), placement.get(j));
-                if (distance > maxDistance) {
-                    maxDistance = distance;
+                if (distance > maxDistance.get()) {
+                    maxDistance.set(distance);
                 }
             }
         }
-        return String.valueOf(maxDistance);
+        return String.valueOf(maxDistance.get());
     }
 
 
