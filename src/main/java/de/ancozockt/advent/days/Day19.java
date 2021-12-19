@@ -22,7 +22,7 @@ public class Day19 implements AdventDay {
         int checkIndex = 0;
         while (done.size() < game.scanners.size()) {
             Scanner current = done.get(checkIndex);
-            for (Scanner scanner : game.scanners) {
+            for (Scanner scanner : game.getScanners()) {
                 if (done.contains(scanner)) {
                     continue;
                 }
@@ -42,7 +42,7 @@ public class Day19 implements AdventDay {
     @Override
     public String part2(BufferedReader reader) {
         Game game = readInput(reader);
-        List<Vector3D> placement = game.scanners.stream().map(Scanner::getPlacementTo0).toList();
+        List<Vector3D> placement = game.getScanners().stream().map(Scanner::getPlacementTo0).toList();
         int maxDistance = 0;
         for (int i = 0; i < placement.size(); i++) {
             for (int j = 0; j < placement.size(); j++) {
@@ -85,6 +85,12 @@ public class Day19 implements AdventDay {
         return new Game(scanners);
     }
 
-    public record Game(List<Scanner> scanners){ }
+    public record Game(List<Scanner> scanners){
+
+        public List<Scanner> getScanners(){
+            return scanners;
+        }
+
+    }
 
 }

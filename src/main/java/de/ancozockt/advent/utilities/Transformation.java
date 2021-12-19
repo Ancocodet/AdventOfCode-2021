@@ -11,15 +11,14 @@ import java.util.stream.Collectors;
 
 public class Transformation {
 
+    private final Function<Vector3D, Double> getX;
+    private final Function<Vector3D, Double> getY;
+    private final Function<Vector3D, Double> getZ;
 
-    Function<Vector3D, Double> getX;
-    Function<Vector3D, Double> getY;
-    Function<Vector3D, Double> getZ;
-
-    int num;
+    private final int num;
 
     @Setter
-    Vector3D move;
+    private Vector3D move;
 
     public Transformation(Function<Vector3D, Double> getX,
                           Function<Vector3D, Double> getY,
@@ -93,15 +92,12 @@ public class Transformation {
     public Vector3D matches(Pair<List<VectorDistance>, List<VectorDistance>> commons) {
         Vector3D newOrigin = this.apply(commons.getRight().get(0).from);
         List<VectorDistance> transformed = commons.getRight().stream()
-                .map(vd -> new VectorDistance(newOrigin, this.apply(vd.to), vd.distance))
-                .collect(Collectors.toList());
+                .map(vd -> new VectorDistance(newOrigin, this.apply(vd.to), vd.distance)).toList();
         int errorLimit = transformed.size() - 11;
-        //If there are common distances, it will yield error, since it checks with all
         Map<Integer, Long> grouped = commons.getLeft().stream().map(VectorDistance::getDistance)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         for (Long val : grouped.values()) {
             if (val > 1) {
-                //For 2 it will fail once on both runs, for 3 it will fail 2 out of 3 on all 3 runs
                 errorLimit += val * (val - 1);
             }
         }
@@ -122,7 +118,6 @@ public class Transformation {
                 }
             }
         }
-        //Transformation is good
         return dist;
     }
 
