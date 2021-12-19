@@ -17,7 +17,40 @@ public class Day19 implements AdventDay {
     public String part1(BufferedReader reader) {
         Game game = readInput(reader);
 
-        Set<Vector3D> fullMapFrom0 = new HashSet<>();
+        Set<Vector3D> fullMapFrom = new HashSet<>();
+        List<Scanner> done = addTransformations(game);
+        done.stream().map(Scanner::getTransformedTo).forEach(fullMapFrom::addAll);
+
+        return String.valueOf(fullMapFrom.size());
+    }
+
+    @Override
+    public String part2(BufferedReader reader) {
+        Game game = readInput(reader);
+        addTransformations(game);
+
+        List<Vector3D> placement = game.getScanners().stream()
+                .map(scanner -> {
+                    return scanner.getPlacementTo();
+                }).toList();
+        AtomicInteger maxDistance = new AtomicInteger(0);
+        placement.forEach(vector3D -> {
+            System.out.println(vector3D.getX() + "|" + vector3D.getY() + "|" + vector3D.getZ());
+        });
+        for (int i = 0; i < placement.size(); i++) {
+            for (int j = 0; j < placement.size(); j++) {
+                if(j == i) continue;
+                int distance = getManhattanDistance(placement.get(i), placement.get(j));
+                if (distance > maxDistance.get()) {
+                    maxDistance.set(distance);
+                }
+            }
+        }
+
+        return String.valueOf(maxDistance.get());
+    }
+
+    private List<Scanner> addTransformations(Game game){
         List<Scanner> done = new ArrayList<>();
         done.add(game.scanners.get(0));
         int checkIndex = 0;
@@ -29,34 +62,15 @@ public class Day19 implements AdventDay {
                 }
                 Transformation transformation = current.getTransformationIfExists(scanner);
                 if (transformation != null) {
-                    scanner.transformationsTo0.addAll(current.transformationsTo0);
-                    scanner.transformationsTo0.add(transformation);
+                    scanner.transformationsTo.addAll(current.transformationsTo);
+                    scanner.transformationsTo.add(transformation);
                     done.add(scanner);
                 }
             }
             checkIndex++;
         }
-        done.stream().map(Scanner::getTransformedTo0).forEach(fullMapFrom0::addAll);
-        return String.valueOf(fullMapFrom0.size());
+        return done;
     }
-
-    @Override
-    public String part2(BufferedReader reader) {
-        Game game = readInput(reader);
-        List<Vector3D> placement = game.getScanners().stream().map(Scanner::getPlacementTo0).toList();
-        AtomicInteger maxDistance = new AtomicInteger(0);
-        for (int i = 0; i < placement.size(); i++) {
-            for (int j = 0; j < placement.size(); j++) {
-                if(j == i) continue;
-                int distance = getManhattanDistance(placement.get(i), placement.get(j));
-                if (distance > maxDistance.get()) {
-                    maxDistance.set(distance);
-                }
-            }
-        }
-        return String.valueOf(maxDistance.get());
-    }
-
 
     private int getManhattanDistance(Vector3D a, Vector3D b) {
         return (int) (Math.abs(a.getX() - b.getX())
@@ -73,7 +87,8 @@ public class Day19 implements AdventDay {
             String line = scanner.nextLine();
             List<Vector3D> measurements = new ArrayList<>();
             while (!"".equals(line) && line != null) {
-                List<Integer> vector = Arrays.stream(line.split(",")).map(Integer::valueOf).toList();
+                List<Integer> vector = Arrays.stream(line.split(","))
+                        .map(Integer::valueOf).toList();
                 measurements.add(new Vector3D(vector.get(0), vector.get(1), vector.get(2)));
                 if (scanner.hasNextLine()) {
                     line = scanner.nextLine();

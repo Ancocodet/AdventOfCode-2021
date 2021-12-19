@@ -12,31 +12,32 @@ public class Scanner {
     private final List<Vector3D> givenMeasurements;
     private final List<Measurement> measurements;
 
-    public List<Transformation> transformationsTo0 = new ArrayList<>();
+    public List<Transformation> transformationsTo = new ArrayList<>();
 
     public Scanner(List<Vector3D> givenMeasurements) {
         this.givenMeasurements = givenMeasurements;
         measurements = givenMeasurements.stream()
-                .map(mes -> new Measurement(mes, givenMeasurements))
-                .collect(Collectors.toList());
+                .map(measurement -> new Measurement(measurement, givenMeasurements))
+                .toList();
     }
 
-    public Vector3D getPlacementTo0() {
+    public Vector3D getPlacementTo() {
         Vector3D transformed = new Vector3D(0, 0, 0);
-        for (int i = transformationsTo0.size() - 1; i >= 0; i--) {
-            transformed = transformationsTo0.get(i).apply(transformed);
+        for (int i = transformationsTo.size() - 1; i >= 0; i--) {
+            transformed = transformationsTo.get(i).apply(transformed);
+            System.out.println(transformed.getX() + "|" + transformed.getY() + "|" + transformed.getZ());
         }
         return transformed;
     }
 
-    public List<Vector3D> getTransformedTo0() {
-        return givenMeasurements.stream().map(gm -> {
-            Vector3D transformed = gm;
-            for (int i = transformationsTo0.size() - 1; i >= 0; i--) {
-                transformed = transformationsTo0.get(i).apply(transformed);
+    public List<Vector3D> getTransformedTo() {
+        return givenMeasurements.stream().map(measurement -> {
+            Vector3D transformed = measurement;
+            for (int i = transformationsTo.size() - 1; i >= 0; i--) {
+                transformed = transformationsTo.get(i).apply(transformed);
             }
             return transformed;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     public Transformation getTransformationIfExists(Scanner scanner) {
