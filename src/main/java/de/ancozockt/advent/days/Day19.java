@@ -30,13 +30,9 @@ public class Day19 implements AdventDay {
         addTransformations(game);
 
         List<Vector3D> placement = game.getScanners().stream()
-                .map(scanner -> {
-                    return scanner.getPlacementTo();
-                }).toList();
+                .map(Scanner::getPlacementTo).toList();
+
         AtomicInteger maxDistance = new AtomicInteger(0);
-        placement.forEach(vector3D -> {
-            System.out.println(vector3D.getX() + "|" + vector3D.getY() + "|" + vector3D.getZ());
-        });
         for (int i = 0; i < placement.size(); i++) {
             for (int j = 0; j < placement.size(); j++) {
                 if(j == i) continue;

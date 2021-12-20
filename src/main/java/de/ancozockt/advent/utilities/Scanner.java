@@ -25,7 +25,6 @@ public class Scanner {
         Vector3D transformed = new Vector3D(0, 0, 0);
         for (int i = transformationsTo.size() - 1; i >= 0; i--) {
             transformed = transformationsTo.get(i).apply(transformed);
-            System.out.println(transformed.getX() + "|" + transformed.getY() + "|" + transformed.getZ());
         }
         return transformed;
     }
